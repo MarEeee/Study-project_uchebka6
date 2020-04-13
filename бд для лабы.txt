@@ -1,0 +1,47 @@
+create table people
+(
+	id serial not null
+		constraint people_pk
+			primary key,
+	name varchar(30) not null,
+	surname varchar(30) not null,
+	age int not null,
+	lib_id int not null  references lib_books
+
+);
+
+create unique index people_lib_id_uindex
+	on people (lib_id);
+
+create table lib_books
+(
+    id_book serial not null
+    constraint lib_books_pk
+			primary key,
+	name varchar(30) not null,
+	num_pages int not null,
+	book_was_set int not null
+);
+
+insert into people(name, surname, age, lib_id) values ('Демон','Шизов',19,1),
+                                                      ('Демон','Шизов',19,2),
+                                                      ('Демон','Шизов',19,3),
+                                                      ('Крисита','Князева',21,4),
+                                                      ('Макс','Рябов',31,5),
+                                                      ('Марта','Гриш',19,6),
+                                                      ('Демон','Шизов',19,8);
+insert into lib_books(name, num_pages, book_was_set) values ('Как вылечить шизу',12,1992),
+                                                            ('Тонкое искусство пофигизма',341,2012),
+                                                            ('Война и мир том 1',450,1885),
+                                                            ('1984',392,1986),
+                                                            ('Театр',145,1988),
+                                                            ('Война и мир том 2',523,1885),
+                                                            ('Вино из одуванчиков',423,2004),
+                                                            ('C# для чайник',900,2012);
+insert into lib_books(name, num_pages, book_was_set) values ('Как вылечить шизу',12,1992)
+insert into people(name, surname, age, lib_id) values ('Re','ds',54,1)
+
+select *from people inner join
+    lib_books lb on people.lib_id = lb.id_book;
+
+insert into lib_books(name, num_pages, book_was_set) values ('Как вылечить шизу',12,1992) returning id_book
